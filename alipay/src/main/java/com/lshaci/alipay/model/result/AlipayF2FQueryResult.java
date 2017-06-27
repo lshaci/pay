@@ -7,32 +7,32 @@ import com.lshaci.alipay.enums.TradeStatus;
  * 面对面支付, 查询返回结果
  */
 public class AlipayF2FQueryResult implements Result {
-	
-    private TradeStatus tradeStatus;
-    private AlipayTradeQueryResponse response;
 
-    public AlipayF2FQueryResult(AlipayTradeQueryResponse response) {
-        this.response = response;
-    }
+	private TradeStatus tradeStatus;
+	private AlipayTradeQueryResponse response;
 
-    public void setTradeStatus(TradeStatus tradeStatus) {
-        this.tradeStatus = tradeStatus;
-    }
+	public AlipayF2FQueryResult(AlipayTradeQueryResponse response) {
+		this.response = response;
+	}
 
-    public void setResponse(AlipayTradeQueryResponse response) {
-        this.response = response;
-    }
+	public void setTradeStatus(TradeStatus tradeStatus) {
+		this.tradeStatus = tradeStatus;
+	}
 
-    public TradeStatus getTradeStatus() {
-        return tradeStatus;
-    }
+	public void setResponse(AlipayTradeQueryResponse response) {
+		this.response = response;
+	}
 
-    public AlipayTradeQueryResponse getResponse() {
-        return response;
-    }
+	public TradeStatus getTradeStatus() {
+		return tradeStatus;
+	}
 
-    @Override
-    public boolean isTradeSuccess() {
-        return response != null && TradeStatus.SUCCESS.equals(tradeStatus);
-    }
+	public AlipayTradeQueryResponse getResponse() {
+		return response;
+	}
+
+	@Override
+	public boolean isTradeSuccess() {
+		return response != null && TradeStatus.SUCCESS.equals(tradeStatus);
+	}
 }

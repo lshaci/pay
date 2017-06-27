@@ -6,52 +6,52 @@ import com.google.gson.Gson;
  * 请求构建对象
  */
 public abstract class RequestBuilder {
-	
+
 	/**
 	 * 商户授权令牌
 	 */
-    private String appAuthToken;
-    
-    /**
-     * 通知地址
-     */
-    private String notifyUrl;
-    
-    private final static Gson gson = new Gson();
+	private String appAuthToken;
 
-    /**
-     *  验证请求对象
-     */
-    public abstract boolean validate();
+	/**
+	 * 通知地址
+	 */
+	private String notifyUrl;
 
-    /**
-     *  获取bizContent对象，用于下一步转换为json字符串
-     */
-    public abstract Object getBizContent();
+	private final static Gson gson = new Gson();
 
-    /**
-     *  将bizContent对象转换为json字符串
-     */
-    public String toJsonString() {
-        // 使用gson将对象转换为json字符串
-        return gson.toJson(this.getBizContent());
-    }
+	/**
+	 * 验证请求对象
+	 */
+	public abstract boolean validate();
 
-    public String getAppAuthToken() {
-        return appAuthToken;
-    }
+	/**
+	 * 获取bizContent对象，用于下一步转换为json字符串
+	 */
+	public abstract Object getBizContent();
 
-    public RequestBuilder setAppAuthToken(String appAuthToken) {
-        this.appAuthToken = appAuthToken;
-        return this;
-    }
+	/**
+	 * 将bizContent对象转换为json字符串
+	 */
+	public String toJsonString() {
+		// 使用gson将对象转换为json字符串
+		return gson.toJson(this.getBizContent());
+	}
 
-    public String getNotifyUrl() {
-        return notifyUrl;
-    }
+	public String getAppAuthToken() {
+		return appAuthToken;
+	}
 
-    public RequestBuilder setNotifyUrl(String notifyUrl) {
-        this.notifyUrl = notifyUrl;
-        return this;
-    }
+	public RequestBuilder setAppAuthToken(String appAuthToken) {
+		this.appAuthToken = appAuthToken;
+		return this;
+	}
+
+	public String getNotifyUrl() {
+		return notifyUrl;
+	}
+
+	public RequestBuilder setNotifyUrl(String notifyUrl) {
+		this.notifyUrl = notifyUrl;
+		return this;
+	}
 }

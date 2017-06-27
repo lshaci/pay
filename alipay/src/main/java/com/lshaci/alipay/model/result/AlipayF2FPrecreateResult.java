@@ -7,32 +7,32 @@ import com.lshaci.alipay.enums.TradeStatus;
  * 当面付2.0, 预支付返回结果
  */
 public class AlipayF2FPrecreateResult implements Result {
-	
-    private TradeStatus tradeStatus;
-    private AlipayTradePrecreateResponse response;
 
-    public AlipayF2FPrecreateResult(AlipayTradePrecreateResponse response) {
-        this.response = response;
-    }
+	private TradeStatus tradeStatus;
+	private AlipayTradePrecreateResponse response;
 
-    public void setTradeStatus(TradeStatus tradeStatus) {
-        this.tradeStatus = tradeStatus;
-    }
+	public AlipayF2FPrecreateResult(AlipayTradePrecreateResponse response) {
+		this.response = response;
+	}
 
-    public void setResponse(AlipayTradePrecreateResponse response) {
-        this.response = response;
-    }
+	public void setTradeStatus(TradeStatus tradeStatus) {
+		this.tradeStatus = tradeStatus;
+	}
 
-    public TradeStatus getTradeStatus() {
-        return tradeStatus;
-    }
+	public void setResponse(AlipayTradePrecreateResponse response) {
+		this.response = response;
+	}
 
-    public AlipayTradePrecreateResponse getResponse() {
-        return response;
-    }
+	public TradeStatus getTradeStatus() {
+		return tradeStatus;
+	}
 
-    @Override
-    public boolean isTradeSuccess() {
-        return response != null && TradeStatus.SUCCESS.equals(tradeStatus);
-    }
+	public AlipayTradePrecreateResponse getResponse() {
+		return response;
+	}
+
+	@Override
+	public boolean isTradeSuccess() {
+		return response != null && TradeStatus.SUCCESS.equals(tradeStatus);
+	}
 }

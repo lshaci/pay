@@ -2,7 +2,8 @@ package com.lshaci.alipay.constants;
 
 public class Constants {
 
-	private Constants() {}
+	private Constants() {
+	}
 
 	public static final String SUCCESS = "10000"; // 成功
 	public static final String PAYING = "10003"; // 用户支付中
