@@ -1,7 +1,5 @@
 package com.lshaci.alipay.config;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,7 +13,7 @@ public class AlipayConfigTest extends SpringTest {
 	@Test
 	public void testName() throws Exception {
 		System.out.println("=====================");
-		System.out.println(alipayConfig.getAppId());
+		System.out.println(alipayConfig.getAlipayPulicKey());
 	}
 
 }
