@@ -7,6 +7,9 @@ import com.google.gson.Gson;
  */
 public abstract class RequestBuilder {
 	
+	/**
+	 * 商户授权令牌
+	 */
     private String appAuthToken;
     
     /**
@@ -14,10 +17,7 @@ public abstract class RequestBuilder {
      */
     private String notifyUrl;
     
-    /**
-     * 
-     */
-    private Gson gson = new Gson();
+    private final static Gson gson = new Gson();
 
     /**
      *  验证请求对象
