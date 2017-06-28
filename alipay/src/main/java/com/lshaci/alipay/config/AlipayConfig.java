@@ -27,7 +27,6 @@ public class AlipayConfig {
 	private String signType;		// 签名类型  
 	private String notifyUrl;		// 通知地址
 	
-	
 	private int maxQueryRetry;   	// 最大查询次数
 	private long queryDuration;  	// 查询间隔（毫秒）
 	

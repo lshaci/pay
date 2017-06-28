@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lshaci.alipay.config.AlipayConfig;
 import com.lshaci.alipay.model.builder.AlipayTradePrecreateRequestBuilder;
+import com.lshaci.alipay.model.result.AlipayF2FNotifyResult;
 import com.lshaci.alipay.model.result.AlipayF2FPrecreateResult;
 import com.lshaci.alipay.service.AlipayTradeService;
 
@@ -46,7 +47,7 @@ public class AlipayController {
 	}
 	
 	@RequestMapping("result")
-	public void result(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public void result(HttpServletRequest request, HttpServletResponse response, AlipayF2FNotifyResult notifyResult) throws IOException {
 		for (Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
 			String key = entry.getKey();
 			String[] value = entry.getValue();
@@ -55,6 +56,8 @@ public class AlipayController {
 				System.out.println("The value is : " + v);
 			}
 		}
+		System.out.println("=======================");
+		System.out.println(notifyResult);
 		response.getWriter().print("SUCCESS");
 	}
 }
