@@ -1,6 +1,7 @@
 package com.lshaci.alipay.model.result;
 
 import com.alipay.api.response.AlipayTradePrecreateResponse;
+import com.lshaci.alipay.constants.Constants;
 import com.lshaci.alipay.enums.TradeStatus;
 
 /**
@@ -29,6 +30,18 @@ public class AlipayF2FPrecreateResult implements Result {
 
 	public AlipayTradePrecreateResponse getResponse() {
 		return response;
+	}
+	
+	/**
+	 * 获取生成的二维码地址
+	 * 
+	 * @return	二维码地址
+	 */
+	public String getQrCode() {
+		if (response != null && Constants.SUCCESS.equals(response.getCode())) {
+			return response.getQrCode();
+		}
+		return null;
 	}
 
 	@Override

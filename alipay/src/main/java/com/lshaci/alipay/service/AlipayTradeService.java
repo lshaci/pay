@@ -1,5 +1,7 @@
 package com.lshaci.alipay.service;
 
+import java.util.Map;
+
 import com.lshaci.alipay.model.builder.AlipayTradePayRequestBuilder;
 import com.lshaci.alipay.model.builder.AlipayTradePrecreateRequestBuilder;
 import com.lshaci.alipay.model.builder.AlipayTradeQueryRequestBuilder;
@@ -24,6 +26,13 @@ public interface AlipayTradeService {
 	 * @return
 	 */
 	AlipayF2FPrecreateResult tradePrecreate(AlipayTradePrecreateRequestBuilder builder);
+	
+	/**
+	 * 当面付2.0支付宝通知
+	 * 
+	 * @param params	request获取的参数
+	 */
+	void tradeNotify(Map<String, String[]> params);
 	
     /**
      *  当面付2.0流程支付

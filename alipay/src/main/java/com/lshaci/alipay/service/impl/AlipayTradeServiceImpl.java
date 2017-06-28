@@ -1,12 +1,19 @@
 package com.lshaci.alipay.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.AlipayResponse;
+import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePrecreateRequest;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
+import com.lshaci.alipay.config.AlipayConfig;
 import com.lshaci.alipay.constants.Constants;
 import com.lshaci.alipay.enums.TradeStatus;
 import com.lshaci.alipay.model.builder.AlipayTradePayRequestBuilder;
@@ -25,12 +32,15 @@ public class AlipayTradeServiceImpl extends AbsAlipayService implements AlipayTr
 	@Autowired
 	private AlipayClient alipayCilent;
 
+	@Autowired
+	private AlipayConfig alipayConfig;
+
 	@Override
 	public AlipayF2FPrecreateResult tradePrecreate(AlipayTradePrecreateRequestBuilder builder) {
 		validateBuilder(builder);
 
 		AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
-		request.setNotifyUrl(builder.getNotifyUrl());
+		request.setNotifyUrl(alipayConfig.getNotifyUrl());
 		request.putOtherTextParam("app_auth_token", builder.getAppAuthToken());
 		request.setBizContent(builder.toJsonString());
 		logger.info("trade.precreate bizContent:" + request.getBizContent());
@@ -49,6 +59,24 @@ public class AlipayTradeServiceImpl extends AbsAlipayService implements AlipayTr
 			result.setTradeStatus(TradeStatus.FAILED);
 		}
 		return result;
+	}
+
+	@Override
+	public void tradeNotify(Map<String, String[]> params) {
+		Map<String, String> checkParams = new HashMap<>();
+		for (Entry<String, String[]> entry : params.entrySet()) {
+			checkParams.put(entry.getKey(), entry.getValue()[0]);
+		}
+		try {
+			boolean rsaCheckV1 = AlipaySignature.rsaCheckV1(checkParams, alipayConfig.getAlipayPulicKey(),
+					alipayConfig.getCharset(), alipayConfig.getSignType());
+			// 如果为true, 处理自己的业务逻辑
+			if (rsaCheckV1) {
+				//TODO
+			}
+		} catch (AlipayApiException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
