@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by liuyangkly on 16/3/3.
+ * 支付结果查询请求构建对象
  */
 public class AlipayTradeQueryRequestBuilder extends RequestBuilder {
 

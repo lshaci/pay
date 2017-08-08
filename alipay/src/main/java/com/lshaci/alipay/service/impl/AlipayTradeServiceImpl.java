@@ -12,7 +12,9 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.AlipayResponse;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePrecreateRequest;
+import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
+import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.lshaci.alipay.config.AlipayConfig;
 import com.lshaci.alipay.constants.Constants;
 import com.lshaci.alipay.enums.TradeStatus;
@@ -87,8 +89,22 @@ public class AlipayTradeServiceImpl extends AbsAlipayService implements AlipayTr
 
 	@Override
 	public AlipayF2FQueryResult queryTradeResult(AlipayTradeQueryRequestBuilder builder) {
-		// TODO Auto-generated method stub
-		return null;
+		AlipayTradeQueryResponse response = tradeQuery(builder);
+
+        AlipayF2FQueryResult result = new AlipayF2FQueryResult(response);
+        if (querySuccess(response)) {
+            // 查询返回该订单交易支付成功
+            result.setTradeStatus(TradeStatus.SUCCESS);
+
+        } else if (tradeError(response)) {
+            // 查询发生异常，交易状态未知
+            result.setTradeStatus(TradeStatus.UNKNOWN);
+
+        } else {
+            // 其他情况均表明该订单号交易失败
+            result.setTradeStatus(TradeStatus.FAILED);
+        }
+        return result;
 	}
 
 	@Override
@@ -103,5 +119,32 @@ public class AlipayTradeServiceImpl extends AbsAlipayService implements AlipayTr
 	protected boolean tradeError(AlipayResponse response) {
 		return response == null || Constants.ERROR.equals(response.getCode());
 	}
+	
+    /**
+     *  查询返回“支付成功”
+     */
+    protected boolean querySuccess(AlipayTradeQueryResponse response) {
+        return response != null &&
+                Constants.SUCCESS.equals(response.getCode()) &&
+                ("TRADE_SUCCESS".equals(response.getTradeStatus()) ||
+                        "TRADE_FINISHED".equals(response.getTradeStatus())
+                );
+    }
 
+    /**
+     * 订单查询
+     * 
+     * @param builder
+     * @return
+     */
+    protected AlipayTradeQueryResponse tradeQuery(AlipayTradeQueryRequestBuilder builder) {
+        validateBuilder(builder);
+
+        AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();
+        request.putOtherTextParam("app_auth_token", builder.getAppAuthToken());
+        request.setBizContent(builder.toJsonString());
+        logger.info("trade.query bizContent:" + request.getBizContent());
+
+        return (AlipayTradeQueryResponse) getResponse(alipayCilent, request);
+    }
 }

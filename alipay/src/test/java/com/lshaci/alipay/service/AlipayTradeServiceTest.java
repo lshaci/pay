@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lshaci.alipay.SpringTest;
 import com.lshaci.alipay.model.builder.AlipayTradePrecreateRequestBuilder;
+import com.lshaci.alipay.model.builder.AlipayTradeQueryRequestBuilder;
 import com.lshaci.alipay.model.result.AlipayF2FPrecreateResult;
+import com.lshaci.alipay.model.result.AlipayF2FQueryResult;
 
 public class AlipayTradeServiceTest extends SpringTest {
 	
@@ -34,11 +36,11 @@ public class AlipayTradeServiceTest extends SpringTest {
 	public void testTradePrecreate() {
 		AlipayTradePrecreateRequestBuilder builder = new AlipayTradePrecreateRequestBuilder();
 
-		builder.setOutTradeNo(outTradeNo);
-		builder.setTotalAmount(totalAmount);
-		builder.setSubject(subject);
-		builder.setStoreId(storeId);
-		builder.setTimeoutExpress(timeoutExpress);
+		builder.setOutTradeNo(outTradeNo)
+				.setTotalAmount(totalAmount)
+				.setSubject(subject)
+				.setStoreId(storeId)
+				.setTimeoutExpress(timeoutExpress);
 		
 		AlipayF2FPrecreateResult tradePrecreate = alipayTradeService.tradePrecreate(builder);
 		System.out.println("==========================");
@@ -52,7 +54,12 @@ public class AlipayTradeServiceTest extends SpringTest {
 
 	@Test
 	public void testQueryTradeResult() {
-		fail("Not yet implemented");
+		AlipayTradeQueryRequestBuilder builder = new AlipayTradeQueryRequestBuilder();
+		
+		builder.setOutTradeNo("19455832784896522").setTradeNo(null);
+		
+		AlipayF2FQueryResult queryTradeResult = alipayTradeService.queryTradeResult(builder);
+		System.err.println(queryTradeResult.getTradeStatus());
 	}
 
 	@Test
