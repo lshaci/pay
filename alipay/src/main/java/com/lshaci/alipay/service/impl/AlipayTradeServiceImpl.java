@@ -16,7 +16,7 @@ import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
 import com.alipay.api.response.AlipayTradeQueryResponse;
 import com.lshaci.alipay.config.AlipayConfig;
-import com.lshaci.alipay.constants.Constants;
+import com.lshaci.alipay.constants.AlipayResponseCode;
 import com.lshaci.alipay.enums.TradeStatus;
 import com.lshaci.alipay.model.builder.AlipayTradePayRequestBuilder;
 import com.lshaci.alipay.model.builder.AlipayTradePrecreateRequestBuilder;
@@ -50,7 +50,7 @@ public class AlipayTradeServiceImpl extends AbsAlipayService implements AlipayTr
 		AlipayTradePrecreateResponse response = (AlipayTradePrecreateResponse) getResponse(alipayCilent, request);
 
 		AlipayF2FPrecreateResult result = new AlipayF2FPrecreateResult(response);
-		if (response != null && Constants.SUCCESS.equals(response.getCode())) {
+		if (response != null && AlipayResponseCode.SUCCESS.equals(response.getCode())) {
 			// 预下单交易成功
 			result.setTradeStatus(TradeStatus.SUCCESS);
 		} else if (tradeError(response)) {
@@ -117,7 +117,7 @@ public class AlipayTradeServiceImpl extends AbsAlipayService implements AlipayTr
 	 * 交易异常，或发生系统错误
 	 */
 	protected boolean tradeError(AlipayResponse response) {
-		return response == null || Constants.ERROR.equals(response.getCode());
+		return response == null || AlipayResponseCode.ERROR.equals(response.getCode());
 	}
 	
     /**
@@ -125,7 +125,7 @@ public class AlipayTradeServiceImpl extends AbsAlipayService implements AlipayTr
      */
     protected boolean querySuccess(AlipayTradeQueryResponse response) {
         return response != null &&
-                Constants.SUCCESS.equals(response.getCode()) &&
+        		AlipayResponseCode.SUCCESS.equals(response.getCode()) &&
                 ("TRADE_SUCCESS".equals(response.getTradeStatus()) ||
                         "TRADE_FINISHED".equals(response.getTradeStatus())
                 );

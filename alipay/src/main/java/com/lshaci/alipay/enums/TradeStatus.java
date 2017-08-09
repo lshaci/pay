@@ -1,5 +1,8 @@
 package com.lshaci.alipay.enums;
 
+/**
+ * 业务交易状态
+ */
 public enum TradeStatus {
 
 	/**

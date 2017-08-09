@@ -1,38 +1,24 @@
 package com.lshaci.alipay.model.result;
 
 import com.alipay.api.response.AlipayTradePayResponse;
-import com.lshaci.alipay.enums.TradeStatus;
 
 /**
  * 面对面支付, 支付返回结果
  */
-public class AlipayF2FPayResult implements Result {
+public class AlipayF2FPayResult extends AbsAlipayResult {
 
-	private TradeStatus tradeStatus;
-	private AlipayTradePayResponse response;
+	private static final long serialVersionUID = -2950162522275795091L;
 
 	public AlipayF2FPayResult(AlipayTradePayResponse response) {
-		this.response = response;
-	}
-
-	public void setTradeStatus(TradeStatus tradeStatus) {
-		this.tradeStatus = tradeStatus;
+		super(response);
 	}
 
 	public void setResponse(AlipayTradePayResponse response) {
 		this.response = response;
 	}
 
-	public TradeStatus getTradeStatus() {
-		return tradeStatus;
-	}
-
 	public AlipayTradePayResponse getResponse() {
-		return response;
+		return (AlipayTradePayResponse) response;
 	}
 
-	@Override
-	public boolean isTradeSuccess() {
-		return response != null && TradeStatus.SUCCESS.equals(tradeStatus);
-	}
 }
