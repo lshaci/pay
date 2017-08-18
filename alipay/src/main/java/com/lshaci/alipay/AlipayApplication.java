@@ -4,14 +4,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class AlipayApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-		System.out.println("============= Dubbo Start On SpringBoot Success =============");
-		synchronized (Application.class) {
+		SpringApplication.run(AlipayApplication.class, args);
+		System.out.println("============= Start Alipay SpringBoot Server Success =============");
+		synchronized (AlipayApplication.class) {
 			try {
-				Application.class.wait();
+				AlipayApplication.class.wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

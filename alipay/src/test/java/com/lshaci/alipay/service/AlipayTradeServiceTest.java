@@ -6,13 +6,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.lshaci.alipay.SpringTest;
+import com.lshaci.alipay.AbsSpringBaseTest;
 import com.lshaci.alipay.model.builder.AlipayTradePrecreateRequestBuilder;
 import com.lshaci.alipay.model.builder.AlipayTradeQueryRequestBuilder;
 import com.lshaci.alipay.model.result.AlipayF2FPrecreateResult;
 import com.lshaci.alipay.model.result.AlipayF2FQueryResult;
 
-public class AlipayTradeServiceTest extends SpringTest {
+public class AlipayTradeServiceTest extends AbsSpringBaseTest {
 	
 	@Autowired
 	private AlipayTradeService alipayTradeService;

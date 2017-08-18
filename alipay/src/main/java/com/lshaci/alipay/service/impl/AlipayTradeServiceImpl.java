@@ -1,16 +1,12 @@
 package com.lshaci.alipay.service.impl;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.AlipayResponse;
-import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePrecreateRequest;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.response.AlipayTradePrecreateResponse;
@@ -27,6 +23,7 @@ import com.lshaci.alipay.model.result.AlipayF2FPrecreateResult;
 import com.lshaci.alipay.model.result.AlipayF2FQueryResult;
 import com.lshaci.alipay.model.result.AlipayF2FRefundResult;
 import com.lshaci.alipay.service.AlipayTradeService;
+import com.lshaci.alipay.utils.VerifyUtils;
 
 @Service
 public class AlipayTradeServiceImpl extends AbsAlipayService implements AlipayTradeService {
@@ -65,19 +62,12 @@ public class AlipayTradeServiceImpl extends AbsAlipayService implements AlipayTr
 
 	@Override
 	public void tradeNotify(Map<String, String[]> params) {
-		Map<String, String> checkParams = new HashMap<>();
-		for (Entry<String, String[]> entry : params.entrySet()) {
-			checkParams.put(entry.getKey(), entry.getValue()[0]);
-		}
-		try {
-			boolean rsaCheckV1 = AlipaySignature.rsaCheckV1(checkParams, alipayConfig.getAlipayPulicKey(),
-					alipayConfig.getCharset(), alipayConfig.getSignType());
-			// 如果为true, 处理自己的业务逻辑
-			if (rsaCheckV1) {
-				//TODO
-			}
-		} catch (AlipayApiException e) {
-			e.printStackTrace();
+		if (VerifyUtils.rsaCheckV1(params)) {
+			//TODO
+			System.err.println("验签成功");
+			System.err.println("执行自己的业务逻辑");
+		} else {
+			System.err.println("验签失败");
 		}
 	}
 
