@@ -13,6 +13,9 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.lshaci.alipay.config.AlipayConfig;
 
+/**
+ * 支付宝验签工具
+ */
 @Component
 public class VerifyUtils {
 	
@@ -27,6 +30,12 @@ public class VerifyUtils {
 		VerifyUtils.alipayConfig = alipayConfig;
 	}
 	
+	/**
+	 * 根据ras2签名类型进行验签
+	 * 
+	 * @param params	支付宝通知时传回的参数
+	 * @return	返回是否验签成功
+	 */
 	public static boolean rsaCheckV1(Map<String, String[]> params) {
 		if (params == null || params.isEmpty()) {
 			return false;
@@ -34,13 +43,11 @@ public class VerifyUtils {
 		
 		Map<String, String> checkParams = new HashMap<>();
 		for (Entry<String, String[]> entry : params.entrySet()) {
-			String key = entry.getKey();
 			String value = "";
-			String[] values = entry.getValue();
-			for (String s : values) {
+			for (String s : entry.getValue()) {
 				value += "," + s;
 			}
-			checkParams.put(key, value.substring(1));
+			checkParams.put(entry.getKey(), value.substring(1));
 		}
 		
 		logger.debug("Cheak params is: " + checkParams);
